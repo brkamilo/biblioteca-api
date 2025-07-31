@@ -1,0 +1,38 @@
+name : Build and deploy
+
+on: 
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'BibliotecaAPI/**'
+      - 'BibliotecaAPITests/**'
+      - '.github/workflows/compile-deploy.yml'
+
+env:
+  VERSION_DOTNET: '9'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      proyecto: BibliotecaAPI/BibliotecaAPI.csproj
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+
+      - name: Install .NET
+        uses: actions/setup-dotnet@v4.3.1
+        with:
+           dotnet-version: ${{ env.VERSION_DOTNET }}
+
+      - name: Get Dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore
+
+      - name: Tests
+        run: dotnet test --no-build
+    
