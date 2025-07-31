@@ -1,0 +1,29 @@
+name: main
+
+on:
+  workflow-dispatch: # ejecucion manual
+  push:
+    branches:
+      - main
+    paths:
+      - 'BibliotecaAPI/**'
+      - 'BibliotecAPITests/**'
+      - '.github/workflows/main.yml'
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  saludar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show message
+        run: echo "Hi"
+
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+
+      - name: List Files
+        run: |
+          echo "The repository ${{ github.repository}} contains next files:"
+          tree
