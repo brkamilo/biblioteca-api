@@ -1,7 +1,7 @@
 name: main
 
 on:
-  workflow-dispatch: # ejecucion manual
+  workflow_dispatch: # ejecucion manual
   push:
     branches:
       - main
